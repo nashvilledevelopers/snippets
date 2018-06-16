@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<ruleset name="WPCS">
+	<description>A custom set of rules to check for WordPress coding standards</description>
+
+	<!-- Exclude WP Core folders and files from being checked. -->
+	<exclude-pattern>/docroot/wp-admin/*</exclude-pattern>
+	<exclude-pattern>/docroot/wp-includes/*</exclude-pattern>
+	<exclude-pattern>/docroot/wp-*.php</exclude-pattern>
+	<exclude-pattern>/docroot/index.php</exclude-pattern>
+	<exclude-pattern>/docroot/xmlrpc.php</exclude-pattern>
+	<exclude-pattern>/docroot/wp-content/plugins/*</exclude-pattern>
+
+	<!-- Exclude node and composer folders -->
+	<exclude-pattern>vendor/*</exclude-pattern>
+	<exclude-pattern>node_modules/*</exclude-pattern>
+	<exclude-pattern>*/data/*</exclude-pattern>
+
+	<!-- Only check php code, linters are checking js and css -->
+	<arg name="extensions" value="php"/>
+
+	<!-- Define default report type -->
+	<arg name="report" value="summary"/>
+
+	<!-- Enable colors in report -->
+	<arg name="colors"/>
+
+	<!-- Include the WordPress-VIP standard. -->
+	<rule ref="WordPress-VIP">
+	</rule>
+
+	<!-- Let's also check that everything is properly documented. -->
+	<!-- <rule ref="WordPress-Docs"/> -->
+
+	<!-- Add in some extra rules from other standards. -->
+	<!-- <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/> -->
+	<!-->
+	For information on additional custom properties available, check out
+	the wiki:
+	https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki/Customizable-sniff-properties
+	-->
+
+	<!-- Disable check for translators comments -->
+	<rule ref="WordPress">
+		<exclude name="WordPress.WP.I18n.TranslatorsCommentWrongStyle" />
+		<exclude name="WordPress.WP.I18n.MissingTranslatorsComment" />
+	</rule>
+
+	<rule ref="Generic.Commenting.Todo"/>
+
+	<config name="minimum_supported_wp_version" value="4.6"/>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array" value="xx"/>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array" value="xx"/>
+		</properties>
+	</rule>
+
+	<!-- Ref: https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki/Customizable-sniff-properties#xss-custom-output-escaping-functions -->
+	<rule ref="WordPress.XSS.EscapeOutput">
+		<properties>
+			<property name="customEscapingFunctions" type="array" value="get_the_tag_list" />
+		</properties>
+	</rule>
+
+</ruleset>
